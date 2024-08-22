@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 export default function SignIn() {
     return (
-        <div className='max-w-lg mx-auto pt-32'>
+        <div className='max-w-lg mx-auto pt-32 px-10'>
             <h1 className='text-3xl text-center font-semibold my-10 text-red-900'>Sign In</h1>
             <form className='flex flex-col gap-4'>
 
