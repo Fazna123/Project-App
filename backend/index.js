@@ -1,7 +1,9 @@
 import express from "express";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
+import userRoute from "./routes/user.route.js";
+import projectRoute from "./routes/project.route.js";
 import cors from "cors";
+import connectDb from "./config/db.js";
 dotenv.config();
 
 const app = express();
@@ -12,13 +14,10 @@ app.use(
   })
 );
 
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => {
-    console.log("connected to mongodb");
-  })
-  .catch((error) => console.log(error));
+app.use("/api/user", userRoute);
+app.use("/api/project", projectRoute);
 
 app.listen(3000, () => {
   console.log("Server on http://localhost:3000");
+  connectDb();
 });

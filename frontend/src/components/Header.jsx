@@ -1,14 +1,32 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { signOut } from "../redux/user/userSlice";
 function Header() {
 
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const { currentUser } = useSelector((state) => state.user)
     const [isMenuOpen, setMenuOpen] = useState(false);
+    const location = useLocation();
 
     useEffect(() => {
         setMenuOpen(false);
-    }, []);
+    }, [location]);
 
+    const handleSignout = async (e) => {
+        try {
+            console.log("url", import.meta.env.VITE_BASE_URL)
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/api/user/signout`)
+            dispatch(signOut())
+            navigate('/sign-in')
+
+        } catch (error) {
+            console.log(error)
+            swal('Failed to Logout')
+        }
+    }
 
     const toggleMenu = () => setMenuOpen(!isMenuOpen);
     return (
@@ -31,12 +49,21 @@ function Header() {
                         <Link to={'/'}>
                             <li className=" text-red-900 font-bold p-3 rounded-lg hover:text-white hover:bg-red-700">Home</li>
                         </Link>
-                        <Link to={'/sign-in'}>
-                            <li className="text-black p-3 rounded-lg hover:text-white hover:bg-red-700">SignIn</li>
-                        </Link>
-                        <Link to={'/sign-up'}>
-                            <li className="text-black p-3 rounded-lg hover:text-white hover:bg-red-700">Register</li>
-                        </Link>
+                        {currentUser ? (
+                            <>
+                                <button onClick={handleSignout} className=" text-red-900 font-bold p-3 rounded-lg hover:text-white hover:bg-red-700">SignOut</button>
+                            </>
+                        ) : (
+                            <>
+                                <Link to={'/sign-in'}>
+                                    <li className="text-red-900 font-bold p-3 rounded-lg hover:text-white hover:bg-red-700">SignIn</li>
+                                </Link>
+                                <Link to={'/sign-up'}>
+                                    <li className="text-red-900 font-bold p-3 rounded-lg hover:text-white hover:bg-red-700">SignUp</li>
+                                </Link>
+                            </>
+                        )}
+
 
                     </ul>
                 </div>
@@ -45,16 +72,22 @@ function Header() {
 
             </div>
             <div className={`lg:hidden absolute top-16 right-0 bg-red-300 w-full ${isMenuOpen ? 'block' : 'hidden'}`}>
-                <ul className='flex flex-col gap-4 p-4'>
+                <ul className='flex flex-col gap-4'>
                     <Link to={'/'}>
-                        <li className="text-black p-3 rounded-lg hover:text-white hover:bg-red-700">Home</li>
+                        <li className=" text-red-900 font-bold p-3 rounded-lg hover:text-white hover:bg-red-700">Home</li>
                     </Link>
-                    <Link to={'/sign-in'}>
-                        <li className="text-black p-3 rounded-lg hover:text-white hover:bg-red-700">SignIn</li>
-                    </Link>
-                    <Link to={'/sign-up'}>
-                        <li className="text-black p-3 rounded-lg hover:text-white hover:bg-red-700">Register</li>
-                    </Link>
+                    {currentUser ? (
+                        <button onClick={handleSignout} className=" text-red-900 font-bold p-3 rounded-lg hover:text-white hover:bg-red-700">SignOut</button>
+                    ) : (
+                        <>
+                            <Link to={'/sign-in'}>
+                                <li className="text-red-900 font-bold p-3 rounded-lg hover:text-white hover:bg-red-700">SignIn</li>
+                            </Link>
+                            <Link to={'/sign-up'}>
+                                <li className="text-red-900 font-bold p-3 rounded-lg hover:text-white hover:bg-red-700">SignUp</li>
+                            </Link>
+                        </>
+                    )}
 
                 </ul>
             </div>

@@ -12,7 +12,7 @@ const todoSchema = new mongoose.Schema(
       default: "Pending",
     },
     project: {
-      ype: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Project",
       required: true,
     },
