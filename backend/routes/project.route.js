@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  createGist,
   createProject,
   getProjects,
   getSingleProject,
@@ -8,12 +9,14 @@ import {
 
 const router = express.Router();
 
-router.get("/", getProjects);
+router.get("/:id", getProjects);
 
 router.post("/", createProject);
 
-router.get("/:id", getSingleProject);
+router.get("/get-project/:id", getSingleProject);
 
 router.put("/update/:id", updateProjectTitle);
+
+router.post("/create-gist", createGist);
 
 export default router;

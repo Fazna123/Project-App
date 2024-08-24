@@ -7,7 +7,7 @@ import {
 
 const router = express.Router();
 
-router.post("/:projectId", addTodo);
+router.post("/:id", addTodo);
 
 router.put("/:id", updateTodo);
 

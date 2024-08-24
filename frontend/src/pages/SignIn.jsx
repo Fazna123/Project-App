@@ -21,7 +21,7 @@ export default function SignIn() {
             const data = response.data
             if (data.success === true) {
                 dispatch(signInSuccess(data.user))
-                navigate('/create-password')
+                navigate('/')
             } else {
                 dispatch(signInFailure(data.message))
             }

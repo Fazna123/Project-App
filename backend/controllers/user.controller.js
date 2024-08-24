@@ -41,10 +41,20 @@ export const signin = async (req, res, next) => {
     }
     const { password: hashedPassword, ...rest } = user._doc;
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
+    // res
+    //   .cookie("accessToken", token, {
+    //     httpOnly: true,
+    //     maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
+    //   })
+    //   .status(200)
+    //   .json({ success: true, user: rest });
     res
       .cookie("accessToken", token, {
         httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000,
+        maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
+        path: "/",
+        secure: false,
+        sameSite: "none",
       })
       .status(200)
       .json({ success: true, user: rest });

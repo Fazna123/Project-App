@@ -4,6 +4,7 @@ import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
 import Header from './components/Header'
 import PrivateRoute from './components/PrivateRoute'
+import ProjectDetails from './pages/ProjectDetails'
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
     <Routes>
       <Route element={<PrivateRoute />}>
         <Route path='/' element={<Home />} />
+        <Route path='/project/:id' element={<ProjectDetails />} />
       </Route>
       <Route path='/sign-in' element={<SignIn />} />
       <Route path='/sign-up' element={<SignUp />} />

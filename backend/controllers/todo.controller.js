@@ -9,7 +9,7 @@ export const addTodo = async (req, res, next) => {
       project: req.body.project,
     });
     const saveTodo = await todo.save();
-    const project = await Project.findById(req.params.projectId);
+    const project = await Project.findById(req.params.id);
     project.todos.push(saveTodo._id);
     await project.save();
     res.status(201).json(saveTodo);
