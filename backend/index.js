@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import userRoute from "./routes/user.route.js";
 import projectRoute from "./routes/project.route.js";
+import todoRoute from "./routes/todo.route.js";
 import cors from "cors";
 import connectDb from "./config/db.js";
 dotenv.config();
@@ -16,6 +17,7 @@ app.use(
 
 app.use("/api/user", userRoute);
 app.use("/api/project", projectRoute);
+app.use("/api/todo", todoRoute);
 
 app.listen(3000, () => {
   console.log("Server on http://localhost:3000");
